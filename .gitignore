@@ -1,0 +1,4 @@
+# Generated ssh-rsa key pairs
+id_rsa*
+# Vagrant hidden repository
+.vagrant
