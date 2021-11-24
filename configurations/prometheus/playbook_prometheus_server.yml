@@ -14,12 +14,12 @@
   - name: Get Prometheus package
     get_url:
       url: https://github.com/prometheus/prometheus/releases/download/v2.31.1/prometheus-2.31.1.linux-amd64.tar.gz
-      dest: /home/vagrant/
+      dest: /tmp/
 
   - name: Untar archive
     unarchive:
-      src: /home/vagrant/prometheus-2.31.1.linux-amd64.tar.gz
-      dest: /home/vagrant/
+      src: /tmp/prometheus-2.31.1.linux-amd64.tar.gz
+      dest: /tmp/
     
   - name: Create prometheus user
     user:
@@ -27,19 +27,28 @@
       shell: /bin/false
       create_home: no
 
-  - name: Copy prometheus exec to /usr/local/bin
-    copy:
-      src: /home/vagrant/prometheus-2.31.1.linux-amd64/promtool
-      dest: /usr/local/bin/
+  - name: Create /var/lib/prometheus
+    file:
+      path: /var/lib/prometheus
+      state: directory
       owner: prometheus
       group: prometheus
 
-  - name: Copy promtool exec to /usr/local/bin
+  - name: Copy prometheus exec to /usr/local/bin
     copy:
-      src: /home/vagrant/prometheus-2.31.1.linux-amd64/prometheus
+      src: /tmp/prometheus-2.31.1.linux-amd64/promtool
       dest: /usr/local/bin/
       owner: prometheus
       group: prometheus
+      mode: '0755'
+
+  - name: Copy promtool exec to /usr/local/bin
+    copy:
+      src: /tmp/prometheus-2.31.1.linux-amd64/prometheus
+      dest: /usr/local/bin/
+      owner: prometheus
+      group: prometheus
+      mode: '0755'
 
   - name: Create /etc/prometheus directory
     file:
@@ -50,28 +59,28 @@
 
   - name: Copy Prometheus consoles to /etc/prometheus directory
     copy:
-      src: /home/vagrant/prometheus-2.31.1.linux-amd64/consoles
+      src: /tmp/prometheus-2.31.1.linux-amd64/consoles
       dest: /etc/prometheus/
       owner: prometheus
       group: prometheus
 
   - name: Copy Prometheus console_libraries to /etc/prometheus directory
     copy:
-      src: /home/vagrant/prometheus-2.31.1.linux-amd64/console_libraries
+      src: /tmp/prometheus-2.31.1.linux-amd64/console_libraries
       dest: /etc/prometheus/
       owner: prometheus
       group: prometheus
 
   - name: Copy Prometheus configuration to /etc/prometheus directory
     copy:
-      src: /vagrant/prometheus.yml
+      src: /home/vagrant/configurations/prometheus/prometheus.yml
       dest: /etc/prometheus/
       owner: prometheus
       group: prometheus
 
   - name: Create a prometheus service file
     copy:
-      src: /vagrant/prometheus.service
+      src: /home/vagrant/configurations/prometheus/prometheus.service
       dest: /etc/systemd/system/
 
   - name: start the prometheus service
