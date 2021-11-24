@@ -26,6 +26,9 @@ sudo cp /vagrant/hosts /etc/hosts
 # Update repository 
 sudo apt-get update
 
+# Symbolic link to the configurations directory
+ln -s /vagrant/configurations /home/vagrant/configurations
+
 # Install Ansible and git on lab-control only
 unamestr=`uname -n`
 echo $unamstr

@@ -26,3 +26,16 @@ vagrant up
 ```shell
 vagrant ssh control
 ```
+
+## Install Prometheus server on control
+```shell
+ansible-playbook -i configurations/hosts configurations/prometheus/playbook_prometheus_server.yml
+```
+
+## Install Prometheus exporter on nodes
+```shell
+ansible-playbook -i configurations/hosts configurations/prometheus/playbook_pro
+metheus_exporter.yml
+```
+
+
