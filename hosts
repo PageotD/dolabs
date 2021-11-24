@@ -7,4 +7,5 @@ ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 
 192.168.56.110 control
-192.168.56.111 node1
+192.168.56.111 node-integration
+192.168.56.112 node-delivery

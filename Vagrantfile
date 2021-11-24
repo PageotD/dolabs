@@ -22,13 +22,31 @@ boxes = [
   },
   {
     # Name of the virtual machine
-    name: "node1",
+    name: "node-integration",
     # OS used for the virtual machine
     osvm: "debian/bullseye64",
     # Fix IP
     eth1: "192.168.56.111",
     # Specific SSH port
     sshp: 2201,
+    # Memory
+    mems: 1024,
+    # CPU
+    cpus: 1,
+    # Provisioning type
+    type: "shell",
+    # Provisioning script
+    path: "scripts/deploySSH.sh"
+  },
+  {
+    # Name of the virtual machine
+    name: "node-delivery",
+    # OS used for the virtual machine
+    osvm: "debian/bullseye64",
+    # Fix IP
+    eth1: "192.168.56.112",
+    # Specific SSH port
+    sshp: 2202,
     # Memory
     mems: 1024,
     # CPU

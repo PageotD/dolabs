@@ -1,0 +1,82 @@
+---
+- name: Install Prometheus Server
+  hosts: 127.0.0.1
+  become: true
+  gather_facts: false
+
+  tasks:
+
+  - name: Ensure wget present
+    apt:
+      name: wget
+      state: present
+
+  - name: Get Prometheus package
+    get_url:
+      url: https://github.com/prometheus/prometheus/releases/download/v2.31.1/prometheus-2.31.1.linux-amd64.tar.gz
+      dest: /home/vagrant/
+
+  - name: Untar archive
+    unarchive:
+      src: /home/vagrant/prometheus-2.31.1.linux-amd64.tar.gz
+      dest: /home/vagrant/
+    
+  - name: Create prometheus user
+    user:
+      name: prometheus
+      shell: /bin/false
+      create_home: no
+
+  - name: Copy prometheus exec to /usr/local/bin
+    copy:
+      src: /home/vagrant/prometheus-2.31.1.linux-amd64/promtool
+      dest: /usr/local/bin/
+      owner: prometheus
+      group: prometheus
+
+  - name: Copy promtool exec to /usr/local/bin
+    copy:
+      src: /home/vagrant/prometheus-2.31.1.linux-amd64/prometheus
+      dest: /usr/local/bin/
+      owner: prometheus
+      group: prometheus
+
+  - name: Create /etc/prometheus directory
+    file:
+      path: /etc/prometheus
+      state: directory
+      owner: prometheus
+      group: prometheus
+
+  - name: Copy Prometheus consoles to /etc/prometheus directory
+    copy:
+      src: /home/vagrant/prometheus-2.31.1.linux-amd64/consoles
+      dest: /etc/prometheus/
+      owner: prometheus
+      group: prometheus
+
+  - name: Copy Prometheus console_libraries to /etc/prometheus directory
+    copy:
+      src: /home/vagrant/prometheus-2.31.1.linux-amd64/console_libraries
+      dest: /etc/prometheus/
+      owner: prometheus
+      group: prometheus
+
+  - name: Copy Prometheus configuration to /etc/prometheus directory
+    copy:
+      src: /vagrant/prometheus.yml
+      dest: /etc/prometheus/
+      owner: prometheus
+      group: prometheus
+
+  - name: Create a prometheus service file
+    copy:
+      src: /vagrant/prometheus.service
+      dest: /etc/systemd/system/
+
+  - name: start the prometheus service
+    systemd:
+      daemon_reload: yes
+      name: prometheus
+      state: started
+      enabled: yes

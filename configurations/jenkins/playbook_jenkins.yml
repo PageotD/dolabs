@@ -1,6 +1,6 @@
 ---
 - name: Install Jenkins
-  hosts: node1
+  hosts: node-integration
   become: true
   gather_facts: false
 

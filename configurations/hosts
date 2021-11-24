@@ -1,0 +1,6 @@
+[master]
+control
+
+[nodes] 
+node-integration
+node-delivery
