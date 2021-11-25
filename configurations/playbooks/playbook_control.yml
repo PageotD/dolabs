@@ -1,0 +1,7 @@
+---
+# * Execute the `prometheus_server` role.
+- hosts: 127.0.0.1
+  become: true
+  any_errors_fatal: true
+  roles:
+    - 'prometheus_server'

@@ -5,9 +5,10 @@
 # * Make sure to `become` a privileged user;
 # * Gather facts about the machine (requires
 # python);
-# * Execute the `docker` role.
+# * Execute the `prometheus_node_exporter` and `docker` roles.
 - hosts: nodes
   become: true
   any_errors_fatal: true
   roles:
-    - 'docker'
+    - docker
+    - prometheus_node_exporter
