@@ -1,0 +1,13 @@
+---
+# * Target whatever is the default group of hosts;
+# * If any errors happen in the middle, stop the
+# whole execution;
+# * Make sure to `become` a privileged user;
+# * Gather facts about the machine (requires
+# python);
+# * Execute the `docker` role.
+- hosts: nodes
+  become: true
+  any_errors_fatal: true
+  roles:
+    - 'docker'

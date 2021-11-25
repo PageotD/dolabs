@@ -1,0 +1,67 @@
+---
+- name: 'Install docker dependencies'
+  apt:
+    name:
+      - apt-transport-https 
+      - ca-certificates 
+      - curl
+      - software-properties-common
+      - python3-pip
+      - virtualenv 
+      - python3-setuptools
+    state: 'present'
+
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/debian bullseye stable
+    state: present
+
+- name: Update cache and install docker
+  apt: 
+    update_cache: yes 
+    name: docker-ce, docker-ce-cli, containerd.io
+    state: latest
+
+- name: Install Docker Module for Python
+  pip:
+    name: docker
+
+- name: Enable docker systemd service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+# As we can configure the docker daemon via the configuration
+# file `/etc/docker/daemon.json` here we take the opportunity
+# of placing one of our own at the relevant destination.
+# - name: 'prepare default daemon configuration'
+#  copy:
+#    src: 'daemon.json'
+#    dest: '/etc/docker/daemon.json'
+
+
+# If you use something like `docker swarm mode` it's
+# very common to have dangling containers around.
+# By setting a cron job to clean thing ups every N
+# hours we make sure that dangling containers don't 
+# stay around for too long.
+# - name: 'set periodic docker system prune'
+#   cron:
+#     name: 'docker-prune'
+#     minute: '0'
+#     hour: '*/2'
+#     job: 'docker container prune -f'
+
+# - name: 'Add users to docker group'
+#  user:
+#    name: '{{ item }}'
+#    groups: 'docker'
+#    append: 'yes'
+#  with_items: '{{ docker_group_members }}'
+#  when: 'docker_group_members is defined'
