@@ -5,6 +5,7 @@
 # * Make sure to `become` a privileged user;
 # * Gather facts about the machine (requires
 # python);
+
 # * Execute the `prometheus_node_exporter` and `docker` roles.
 - hosts: nodes
   become: true
@@ -12,3 +13,10 @@
   roles:
     - docker
     - prometheus_node_exporter
+
+# * Execute the `kubectl` role.
+- hosts: node-delivery
+  become: true
+  any_errors_fatal: true
+  roles:
+    - kubectl
