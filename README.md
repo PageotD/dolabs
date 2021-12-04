@@ -43,4 +43,8 @@ ansible-playbook -i hosts playbooks/playbook_control.yml
 ansible-playbook -i hosts playbooks/playbook_nodes.yml
 ```
 
-
+## Allow Nested virtualization
+```shell
+VBoxManage modifyvm lab-node-integration --nested-hw-virt on
+VBoxManage modifyvm lab-node-delivery --nested-hw-virt on
+```

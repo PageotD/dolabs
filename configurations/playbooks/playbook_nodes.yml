@@ -14,9 +14,10 @@
     - docker
     - prometheus_node_exporter
 
-# * Execute the `kubectl` role.
+# * Execute the `k8skind` and 'kubectl' roles.
 - hosts: node-delivery
   become: true
   any_errors_fatal: true
   roles:
+    - k8skind
     - kubectl

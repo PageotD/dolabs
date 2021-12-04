@@ -1,0 +1,20 @@
+---
+- name: 'Install Kind (k8s) dependencies'
+  apt:
+    name:
+      - apt-transport-https 
+      - ca-certificates 
+      - curl
+    state: 'present'
+
+- name: Create /user/local/bin repository
+  file:
+    name: /user/local/bin
+    state: directory
+    owner: vagrant
+
+- name: Get Kind (k8s)
+  get_url: 
+    url: https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
+    dest: /user/local/bin/kind
+    mode: 'a+x'
