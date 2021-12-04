@@ -5,3 +5,4 @@
   any_errors_fatal: true
   roles:
     - 'prometheus_server'
+    - 'grafana'

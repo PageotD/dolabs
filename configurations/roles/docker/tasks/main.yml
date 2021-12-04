@@ -6,6 +6,7 @@
       - ca-certificates 
       - curl
       - software-properties-common
+      - gnupg2
       - python3-pip
       - virtualenv 
       - python3-setuptools

@@ -8,8 +8,10 @@ The main VM is named *control* and is automatically provisioned with [Ansible](h
 | docker              |   | x | x |
 | prometheus server   | x |   |   |
 | prometheus exporter |   | x | x |
-| grafana             | - |   |   |
+| grafana             | x |   |   |
 | jenkins             |   | - |   |
+| kind                |   |   | x |
+| kubectl             |   |   | x |
 
 
 ## Prerequisites
