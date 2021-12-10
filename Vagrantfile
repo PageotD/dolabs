@@ -59,7 +59,6 @@ boxes = [
 ]
 
 Vagrant.configure("2") do |config|
-
   boxes.each do |box|
     config.vm.define box[:name] do |subconfig|
       # This configures what box the machine will be brought up against. 
@@ -75,6 +74,8 @@ Vagrant.configure("2") do |config|
       # Configures provider-specific configuration, which is used to modify
       # settings which are specific to a certain provider.
       subconfig.vm.provider :virtualbox do |vb|
+        # Add the virtualbox to the dolabs group
+        vb.customize ["modifyvm", :id, "--groups", "/dolabs"]
         # The name the virtualbox should have
         vb.name = "lab-"+box[:name]
         # Configure the allocated RAM
